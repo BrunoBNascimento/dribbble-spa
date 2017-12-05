@@ -1,0 +1,148 @@
+.shots{
+
+  .row {
+    padding:10px 0 10px 0;
+  }
+
+  .search-field, .search-field:hover {
+    background:#E8E8E8;
+    border-radius:4px;
+    border:none;
+    padding: 5px 5px 5px 20px;
+    outline:none;
+  }
+
+  .filter-card-size:focus {
+    outline:none;
+  }
+
+  .shot-container{
+    display: flex;
+    height: auto; /* Or whatever */
+    flex-flow: row wrap;
+
+    .attachment-flag{
+      bottom:20px;
+      font-size:20px;
+      height: 20px;
+      left:15px;
+      position:absolute;
+      width: 20px;
+    }
+  }
+
+  .shot-container ul{
+    padding:15px;
+    float:right;
+    font-size:12px;
+  }
+
+  .shot-container ul li{
+    list-style: none;
+    display:inline;
+    margin-left:10px;
+  }
+
+  .shot-card{
+    margin: 10px auto;
+    background:white;
+    box-shadow:1px 3px 4px #e0e0e0;
+    position:relative;
+  }
+
+  .small {
+    width:200px;
+    height:150px;
+  }
+
+  .small-info{
+    width:200px;
+    height:200px;
+  }
+
+  .large{
+    width:400px;
+    height:300px;
+  }
+
+  .large-info{
+    width:400px;
+    height:345px;
+  }
+
+  .shot-card-img{
+    margin:auto;
+  }
+
+  .shot-card-img:hover{
+    cursor:pointer;
+  }
+
+  .shot-card-img img{
+    display:block;
+    margin:auto;
+  }
+
+  .page-buttons-container{
+    float:right;
+    width:200px;
+    padding:20px;
+  }
+
+}
+
+.filter-wrapper {
+  display:flex;
+  flex-direction: row;
+  margin:auto;
+  width:204px;
+}
+
+.filter-card-size {
+  background:none;
+  border-radius:5px;
+  border:none;
+  display:block;
+  height:50px;
+  float:left;
+  color:#ACACAC;
+  font-weight: bold;
+  width:50px;
+}
+
+.filter-card-size.active {
+  background:#E8E8E8;
+  color:#333333;
+}
+
+.filter-card-size:hover {
+  color:#333333;
+}
+.avatar-container{
+  font-weight: bold;
+}
+
+.modal-padding{
+  padding:15px 0 15px 0;
+}
+
+.avatar-photo{
+  border-radius:50%;
+  width:30px;
+  height:30px;
+}
+.shot-actions-container{
+  box-sizing: border-box;
+  color:#ACACAC;
+  font-weight: bold;
+  padding:10px;
+
+  .col{
+    padding:10px 0 10px 0;
+    border-bottom:1px solid #cecece;
+  }
+}
+
+.clear{
+  clear: both;
+}

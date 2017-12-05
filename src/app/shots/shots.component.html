@@ -1,0 +1,109 @@
+<ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }"></ngx-loading>
+<div class="container-fluid shots">
+  <div class="row">
+    <div class="search-content col-sm-10 col-sm-offset-1">
+      <input type="text" class="col-sm-12 search-field" placeholder="Pesquise shots!" #search [(ngModel)]="shotName"
+             (input)="filterShot(search.value)">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="filter-wrapper">
+      <button class="filter-card-size" [class.active]="buttonActive == 'small-info'" (click)="setActive('small-info')"
+              tooltip="Imagem pequena (com infos)" placement="left">
+        <i class="fa fa-picture-o fa-1x" aria-hidden="true"></i>
+      </button>
+      <button class="filter-card-size fa-2x" [class.active]="buttonActive == 'large-info'"
+              (click)="setActive('large-info')" tooltip="Imagem grande (com infos)" placement="bottom">
+        <i class="fa fa-picture-o" aria-hidden="true"></i>
+      </button>
+      <button class="filter-card-size fa-1x" [class.active]="buttonActive == 'large'" (click)="setActive('large')"
+              tooltip="Imagem pequena (sem infos)" placement="bottom">
+        <i class="glyphicon glyphicon-th-large" aria-hidden="true"></i>
+      </button>
+      <button class="filter-card-size" [class.active]="buttonActive == 'small'" (click)="setActive('small')"
+              tooltip="Imagem grande (com infos)" placement="right">
+        <i class="glyphicon glyphicon-th" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row col-sm-10 col-sm-offset-1 shot-container">
+    <div class="shot-card {{buttonActive}}" *ngFor="let shot of filteredShots; let i = index" [attr.data-index]="i"
+         [tooltip]="shot.title"
+         placement="top" (click)="openModal(template); setShot(i)">
+
+      <div class="shot-card-img">
+        <img alt="personalised learning" *ngIf="buttonActive.indexOf('small') > -1" [src]="shot.images.teaser">
+        <img alt="personalised learning" *ngIf="buttonActive.indexOf('large') > -1" [src]="shot.images.normal">
+      </div>
+
+      <div class="attachment-flag" *ngIf="shot.attachments_count > 0 && buttonActive.indexOf('-info') > -1"
+           tooltip="Este shot tem anexos" placement="left">
+        <i class="fa fa-paperclip" aria-hidden="true"></i>
+      </div>
+
+      <ul *ngIf="buttonActive.indexOf('-info') > -1">
+        <li><i class="fa fa-eye" aria-hidden="true"></i> {{shot.views_count}}</li>
+        <li><i class="fa fa-comment" aria-hidden="true"></i> {{shot.comments_count}}</li>
+        <li><i class="fa fa-heart" aria-hidden="true"></i> {{shot.likes_count}}</li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="clear" style="clear: both;"></div>
+  <div class="page-buttons-container">
+    <button (click)="decrementPage()" class="btn btn-default" [disabled]="page === 1">Anterior</button>
+    <button (click)="incrementPage()" class="btn btn-default">Próxima</button>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{shot.title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row avatar-container modal-padding">
+      <div class="col-sm-12 ">
+        <a [href]="shot.user.html_url" target="_blank"> <img [src]="shot.user.avatar_url" class="avatar-photo">
+          {{shot.user.name}}</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-8">
+        <img [src]="shot.images.normal" alt="shot.title">
+      </div>
+
+      <div class="col-sm-4">
+        <div class="shot-actions-container">
+          <div class="col col-sm-12">
+            <div class="pull-left" *ngIf="isLogged" (click)="likeShot(shot.id)"><i class="fa fa-heart" aria-hidden="true"></i> Likes</div>
+            <div class="pull-left" *ngIf="!isLogged">
+              <a href="https://dribbble.com/oauth/authorize?client_id=80c6203bcc323b8c272e278a3e440a0f0774a552c21b5fc1f9745329ec08b823&scope=public+write"><i class="fa fa-heart" aria-hidden="true"></i> Likes</a>
+            </div>
+            <div class="pull-right">{{shot.likes_count}}</div>
+          </div>
+          <div class="col col-sm-12">
+            <div class="pull-left"><i class="fa fa-share" aria-hidden="true"></i> Share</div>
+            <div class="pull-right">{{shot.views_count}}</div>
+          </div>
+          <div class="col col-sm-12">
+            <div class="pull-left"><i class="fa fa-bitbucket" aria-hidden="true"></i> Buckets</div>
+            <div class="pull-right">{{shot.buckets_count}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="row description-container modal-padding">
+      <div class="col-sm-12" [innerHtml]="shot.description">
+      </div>
+    </div>
+
+  </div>
+</ng-template>
